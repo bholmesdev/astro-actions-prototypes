@@ -1,0 +1,20 @@
+{
+  "name": "fetch-actions",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^2.2.3",
+    "@astrojs/rss": "^4.0.5",
+    "@astrojs/sitemap": "^3.1.2",
+    "astro": "^4.5.15",
+    "@astrojs/check": "^0.5.10",
+    "typescript": "^5.4.3"
+  }
+}

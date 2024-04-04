@@ -98,6 +98,9 @@ importers:
       es-module-lexer:
         specifier: ^1.5.0
         version: 1.5.0
+      fast-glob:
+        specifier: ^3.3.2
+        version: 3.3.2
       react:
         specifier: 18.3.0-canary-670811593-20240322
         version: 18.3.0-canary-670811593-20240322

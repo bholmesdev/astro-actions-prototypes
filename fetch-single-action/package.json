@@ -21,6 +21,7 @@
     "astro": "^4.5.15",
     "astro-integration-kit": "^0.8.0",
     "es-module-lexer": "^1.5.0",
+    "fast-glob": "^3.3.2",
     "react": "18.3.0-canary-670811593-20240322",
     "react-dom": "18.3.0-canary-670811593-20240322",
     "typescript": "^5.4.3",

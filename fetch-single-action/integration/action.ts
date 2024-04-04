@@ -1,18 +1,9 @@
-// This will be code gen
-export type ActionMap = {
-  "/blog/like": typeof import("../src/pages/blog/like").action;
-  "/blog/comment": typeof import("../src/pages/blog/comment").action;
-};
+import type { Actions } from "astro:actions";
 
-export type ActionResult<T extends keyof ActionMap> = {
-  param: Parameters<ActionMap[T]>[0];
-  result: ReturnType<ActionMap[T]>;
-};
-
-export async function action<T extends keyof ActionMap>(
+export async function action<T extends keyof Actions>(
   path: T,
-  param: ActionResult<T>["param"]
-): Promise<ActionResult<T>["result"]> {
+  param: Parameters<Actions[T]>[0]
+): Promise<ReturnType<Actions[T]>> {
   const headers = new Headers();
   headers.set("Accept", "application/json");
   let body: any = param;

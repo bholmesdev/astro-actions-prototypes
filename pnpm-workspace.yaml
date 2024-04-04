@@ -1,4 +1,4 @@
 packages:
-  fetch-actions
-  fetch-single-action
-  import-actions
+- fetch-actions
+- fetch-single-action
+- import-actions

@@ -8,6 +8,61 @@ importers:
 
   .: {}
 
+  fetch-actions:
+    dependencies:
+      '@astrojs/check':
+        specifier: ^0.5.10
+        version: 0.5.10(typescript@5.4.3)
+      '@astrojs/db':
+        specifier: ^0.10.0
+        version: 0.10.0(@types/react@18.2.74)(react@18.3.0-canary-670811593-20240322)
+      '@astrojs/mdx':
+        specifier: ^2.2.3
+        version: 2.2.3(astro@4.5.15)
+      '@astrojs/react':
+        specifier: ^3.1.1
+        version: 3.1.1(@types/react-dom@18.2.24)(@types/react@18.2.74)(react-dom@18.3.0-canary-670811593-20240322)(react@18.3.0-canary-670811593-20240322)(vite@5.2.8)
+      '@astrojs/rss':
+        specifier: ^4.0.5
+        version: 4.0.5
+      '@astrojs/sitemap':
+        specifier: ^3.1.2
+        version: 3.1.2
+      '@types/react':
+        specifier: ^18.2.74
+        version: 18.2.74
+      '@types/react-dom':
+        specifier: ^18.2.24
+        version: 18.2.24
+      astro:
+        specifier: ^4.5.15
+        version: 4.5.15(typescript@5.4.3)
+      astro-integration-kit:
+        specifier: ^0.8.0
+        version: 0.8.0(@astrojs/db@0.10.0)(astro@4.5.15)(react-dom@18.3.0-canary-670811593-20240322)(react@18.3.0-canary-670811593-20240322)
+      es-module-lexer:
+        specifier: ^1.5.0
+        version: 1.5.0
+      fast-glob:
+        specifier: ^3.3.2
+        version: 3.3.2
+      react:
+        specifier: 18.3.0-canary-670811593-20240322
+        version: 18.3.0-canary-670811593-20240322
+      react-dom:
+        specifier: 18.3.0-canary-670811593-20240322
+        version: 18.3.0-canary-670811593-20240322(react@18.3.0-canary-670811593-20240322)
+      typescript:
+        specifier: ^5.4.3
+        version: 5.4.3
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      vite:
+        specifier: ^5.2.8
+        version: 5.2.8
+
   fetch-single-action:
     dependencies:
       '@astrojs/check':
@@ -59,6 +114,30 @@ importers:
       vite:
         specifier: ^5.2.8
         version: 5.2.8
+
+  import-actions:
+    dependencies:
+      '@astrojs/check':
+        specifier: ^0.5.10
+        version: 0.5.10(typescript@5.4.3)
+      '@astrojs/mdx':
+        specifier: ^2.2.3
+        version: 2.2.3(astro@4.5.15)
+      '@astrojs/rss':
+        specifier: ^4.0.5
+        version: 4.0.5
+      '@astrojs/sitemap':
+        specifier: ^3.1.2
+        version: 3.1.2
+      astro:
+        specifier: ^4.5.15
+        version: 4.5.15(typescript@5.4.3)
+      typescript:
+        specifier: ^5.4.3
+        version: 5.4.3
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
 
 packages:
 

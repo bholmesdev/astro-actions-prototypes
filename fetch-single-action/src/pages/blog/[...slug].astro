@@ -1,20 +1,69 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import { type CollectionEntry, getCollection } from "astro:content";
+import BlogPost from "../../layouts/BlogPost.astro";
+import { db, Likes, Comment, eq } from "astro:db";
+import { Like } from "../../components/Like";
+import { getEntry } from "astro:content";
 
-export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.slug },
-		props: post,
-	}));
-}
-type Props = CollectionEntry<'blog'>;
+export const prerender = false;
 
-const post = Astro.props;
+// export async function getStaticPaths() {
+//   const posts = await getCollection("blog");
+//   return posts.map((post) => ({
+//     params: { slug: post.slug },
+//     props: post,
+//   }));
+// }
+type Props = CollectionEntry<"blog">;
+
+const post = await getEntry("blog", Astro.params.slug as string);
+if (!post) return Astro.redirect("/");
 const { Content } = await post.render();
+
+const commented = Astro.locals.getActionResult("/blog/comment");
+
+const likes = await db
+  .select()
+  .from(Likes)
+  .where(eq(Likes.postId, post.id))
+  .get();
+const comments = await db
+  .select()
+  .from(Comment)
+  .where(eq(Comment.postId, post.id));
 ---
 
 <BlogPost {...post.data}>
-	<Content />
+  {commented?.success && <p class="comment">Comment posted</p>}
+  <Like initial={likes?.likes ?? 0} postId={post.id} client:load />
+  <Content />
+
+  <h2>Comments</h2>
+  <form method="POST" action="/blog/comment">
+    <input type="hidden" name="postId" value={post.id} />
+    <label class="sr-only" for="author">Author</label>
+    <input id="author" type="text" name="author" placeholder="Your name" />
+    <textarea rows="10" name="body"></textarea>
+    <button type="submit">Post</button>
+  </form>
+  <div class="comments">
+    {
+      comments.map((c) => (
+        <article>
+          <p class="comment-body">{c.body}</p>
+          <p class="comment-author">{c.author}</p>
+        </article>
+      ))
+    }
+  </div>
 </BlogPost>
+
+<style>
+  .comment {
+    background: #d1f7d5;
+    color: #0f5132;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 0.2rem;
+  }
+</style>

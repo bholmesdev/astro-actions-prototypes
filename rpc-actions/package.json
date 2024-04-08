@@ -1,0 +1,22 @@
+{
+  "name": "rpc-actions",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.5.10",
+    "@astrojs/db": "^0.10.1",
+    "@astrojs/mdx": "^2.2.4",
+    "@astrojs/rss": "^4.0.5",
+    "@astrojs/sitemap": "^3.1.2",
+    "astro": "^4.5.16",
+    "typescript": "^5.4.4",
+    "zod": "^3.22.4"
+  }
+}

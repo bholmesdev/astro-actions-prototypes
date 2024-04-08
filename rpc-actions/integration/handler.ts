@@ -1,0 +1,47 @@
+import { APIRoute } from "astro";
+import { actions } from "../src/actions/index";
+import { ApiContextStorage } from "./middleware";
+
+export const POST: APIRoute = async (context) => {
+  const { request, url, redirect } = context;
+  if (request.method !== "POST") {
+    return new Response(null, { status: 405 });
+  }
+  const contentType = request.headers.get("Content-Type");
+  let args: any;
+  if (contentType === "application/json") {
+    args = await request.json();
+  }
+  if (formContentTypes.some((f) => contentType?.startsWith(f))) {
+    args = await request.formData();
+  }
+  let result: unknown;
+  try {
+    // TODO: select correct action by path
+    result = await ApiContextStorage.run(context, () => actions.like(args));
+  } catch (e) {
+    if (e instanceof Response) {
+      return e;
+    }
+    throw e;
+  }
+  if (request.headers.get("Accept") === "application/json") {
+    return new Response(JSON.stringify(result), {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+  let redirectUrl = new URL(request.headers.get("Referer") || request.url);
+  if (result) {
+    redirectUrl.searchParams.set("_action", url.pathname);
+    redirectUrl.searchParams.set("_actionResult", JSON.stringify(result));
+  }
+
+  return redirect(redirectUrl.href);
+};
+
+const formContentTypes = [
+  "application/x-www-form-urlencoded",
+  "multipart/form-data",
+];

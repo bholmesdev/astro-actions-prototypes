@@ -1,4 +1,4 @@
-import { APIContext } from "astro";
+import type { APIContext } from "astro";
 import { z } from "zod";
 import { ApiContextStorage } from "./middleware";
 

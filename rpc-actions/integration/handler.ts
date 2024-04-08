@@ -1,12 +1,28 @@
-import { APIRoute } from "astro";
-import { actions } from "../src/actions/index";
+import type { APIRoute } from "astro";
+import { actions } from "../src/actions";
 import { ApiContextStorage } from "./middleware";
+
+function getAction(pathKeys: string[]): Function {
+  let actionObj: any = actions;
+  for (const key of pathKeys) {
+    if (!(key in actionObj)) {
+      throw new Error("Action not found");
+    }
+    actionObj = actionObj[key];
+  }
+  if (typeof actionObj !== "function") {
+    throw new Error("Action not found");
+  }
+  return actionObj;
+}
 
 export const POST: APIRoute = async (context) => {
   const { request, url, redirect } = context;
   if (request.method !== "POST") {
     return new Response(null, { status: 405 });
   }
+  const actionPathKeys = url.pathname.replace("/_actions/", "").split(".");
+  const action = getAction(actionPathKeys);
   const contentType = request.headers.get("Content-Type");
   let args: any;
   if (contentType === "application/json") {
@@ -18,7 +34,7 @@ export const POST: APIRoute = async (context) => {
   let result: unknown;
   try {
     // TODO: select correct action by path
-    result = await ApiContextStorage.run(context, () => actions.like(args));
+    result = await ApiContextStorage.run(context, () => action(args));
   } catch (e) {
     if (e instanceof Response) {
       return e;

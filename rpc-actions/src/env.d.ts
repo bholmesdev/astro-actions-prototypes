@@ -2,7 +2,7 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
 
-declare module "astro:actions" {
+declare module "test:actions" {
   type Actions = typeof import("./actions/index")["actions"];
 
   export const actions: Actions;

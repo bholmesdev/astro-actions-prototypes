@@ -3,12 +3,16 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import { actions } from "astro:actions";
-
-const res = await actions.like(new FormData());
 ---
 
-<!doctype html>
+<script>
+  import { actions } from "test:actions";
+
+  const formData = new FormData();
+  formData.append("postId", "first-post.md");
+  await actions.blog.like(formData);
+</script>
+
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />

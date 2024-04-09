@@ -3,6 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { actions } from "test:actions";
 ---
 
 <script>
@@ -19,6 +20,10 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
   </head>
   <body>
     <Header />
+    <form action={actions.blog.like} method="post">
+      <input type="hidden" name="postId" value="first-post.md" />
+      <button type="submit">Like</button>
+    </form>
     <main>
       <h1>🧑‍🚀 Hello, Astronaut!</h1>
       <p>

@@ -1,7 +1,10 @@
 function toActionProxy(actionCallback = {}, aggregatedPath = "/_actions/") {
   return new Proxy(actionCallback, {
-    get(_, objKey) {
+    get(target, objKey) {
       const path = aggregatedPath + objKey.toString();
+      if (objKey in target) {
+        return target[objKey];
+      }
       async function action(param) {
         const headers = new Headers();
         headers.set("Accept", "application/json");
@@ -17,6 +20,8 @@ function toActionProxy(actionCallback = {}, aggregatedPath = "/_actions/") {
         });
         return res.json();
       }
+      action.toString = () => path;
+      action[Symbol.toPrimitive] = () => path;
       // recurse to construct queries for nested object paths
       // ex. actions.user.admins.auth()
       return toActionProxy(action, path + ".");

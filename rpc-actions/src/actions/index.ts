@@ -1,9 +1,10 @@
 import { db, Comment, Likes, eq, sql } from "astro:db";
-import { action } from "../../integration/action";
+import { action, formData } from "../../integration/action";
 import { z } from "zod";
 
-const like = action(z.object({ postId: z.string() }), async ({ postId }) => {
+const like = action(formData({ postId: z.string() }), async ({ postId }) => {
   await new Promise((r) => setTimeout(r, 200));
+
   const { likes } = await db
     .update(Likes)
     .set({

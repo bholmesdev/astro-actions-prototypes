@@ -3,7 +3,7 @@
 /// <reference types="astro/client" />
 
 declare module "test:actions" {
-  type Actions = typeof import("./actions/index")["actions"];
+  type Actions = typeof import("./actions")["default"];
 
   export const actions: Actions;
 }

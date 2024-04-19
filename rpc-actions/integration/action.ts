@@ -1,6 +1,8 @@
 import type { APIContext } from "astro";
 import { z } from "zod";
-import { ApiContextStorage } from "./middleware";
+import { AsyncLocalStorage } from "node:async_hooks";
+
+export const ApiContextStorage = new AsyncLocalStorage<APIContext>();
 
 export function defineAction<TOutput, TInputSchema extends z.ZodType>({
   input,

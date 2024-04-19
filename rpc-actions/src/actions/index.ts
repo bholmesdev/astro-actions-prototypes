@@ -35,7 +35,7 @@ const comment = defineAction({
   },
 });
 
-export const actions = {
+export default {
   blog: {
     like,
     comment,

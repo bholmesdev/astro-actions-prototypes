@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import { actions } from "../src/actions";
-import { ApiContextStorage } from "./middleware";
+import actions from "../src/actions";
+import { ApiContextStorage } from "./action";
 
 function getAction(pathKeys: string[]): Function {
   let actionObj: any = actions;

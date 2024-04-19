@@ -1,6 +1,8 @@
 /// <reference path="../.astro/db-types.d.ts" />
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
+/// <reference types="../.astro/typed-api.d.ts" />
+
 /// <reference types="../.astro/fetch-actions.d.ts" />
 
 type Actions = import("astro:actions").Actions;

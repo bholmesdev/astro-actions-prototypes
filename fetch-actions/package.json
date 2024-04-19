@@ -20,6 +20,7 @@
     "@types/react-dom": "^18.2.24",
     "astro": "^4.5.15",
     "astro-integration-kit": "^0.8.0",
+    "astro-typed-api": "^0.2.2",
     "es-module-lexer": "^1.5.0",
     "fast-glob": "^3.3.2",
     "react": "18.3.0-canary-670811593-20240322",

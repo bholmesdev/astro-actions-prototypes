@@ -13,10 +13,15 @@
     "@astrojs/check": "^0.5.10",
     "@astrojs/db": "^0.10.1",
     "@astrojs/mdx": "^2.2.4",
+    "@astrojs/react": "^3.3.0",
     "@astrojs/rss": "^4.0.5",
     "@astrojs/sitemap": "^3.1.2",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
     "astro": "^4.5.16",
     "astro-integration-kit": "^0.9.0",
+    "react": "18.3.0-canary-670811593-20240322",
+    "react-dom": "18.3.0-canary-670811593-20240322",
     "typescript": "^5.4.4",
     "zod": "^3.22.4"
   }

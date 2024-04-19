@@ -2,7 +2,7 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import db from "@astrojs/db";
-
+import typedApi from "astro-typed-api";
 import react from "@astrojs/react";
 import { actions } from "./integration/index.ts";
 
@@ -10,5 +10,5 @@ import { actions } from "./integration/index.ts";
 export default defineConfig({
   site: "https://example.com",
   output: "hybrid",
-  integrations: [mdx(), sitemap(), db(), react(), actions()],
+  integrations: [mdx(), sitemap(), db(), react(), actions(), typedApi()],
 });

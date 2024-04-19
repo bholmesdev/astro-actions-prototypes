@@ -1,32 +1,39 @@
 import { db, Comment, Likes, eq, sql } from "astro:db";
-import { action, formData } from "../../integration/action";
+import { defineAction, formData } from "../../integration/action";
 import { z } from "zod";
 
-const like = action(formData({ postId: z.string() }), async ({ postId }) => {
-  await new Promise((r) => setTimeout(r, 200));
+const like = defineAction({
+  input: z.object({ postId: z.string() }),
+  handler: async ({ postId }, context) => {
+    await new Promise((r) => setTimeout(r, 200));
 
-  const { likes } = await db
-    .update(Likes)
-    .set({
-      likes: sql`likes + 1`,
-    })
-    .where(eq(Likes.postId, postId))
-    .returning()
-    .get();
-  return { likes };
+    const { likes } = await db
+      .update(Likes)
+      .set({
+        likes: sql`likes + 1`,
+      })
+      .where(eq(Likes.postId, postId))
+      .returning()
+      .get();
+    return { likes };
+  },
 });
 
-const comment = action(
-  z.object({ postId: z.string(), author: z.string(), body: z.string() }),
-  async ({ postId, author, body }) => {
+const comment = defineAction({
+  input: formData({
+    postId: z.string(),
+    author: z.string(),
+    body: z.string(),
+  }),
+  handler: async ({ postId, author, body }) => {
     await db.insert(Comment).values({
       postId,
       body,
       author,
     });
     return { success: true };
-  }
-);
+  },
+});
 
 export const actions = {
   blog: {

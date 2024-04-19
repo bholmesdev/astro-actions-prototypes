@@ -2,23 +2,22 @@ import type { APIContext } from "astro";
 import { z } from "zod";
 import { ApiContextStorage } from "./middleware";
 
-export function action<TInputSchema extends z.ZodType, TOutput>(
-  handler: (context: APIContext) => TOutput
-): (input: any) => Promise<Awaited<TOutput>>;
-export function action<TInputSchema extends z.ZodType, TOutput>(
-  input: TInputSchema,
-  handler: (input: z.infer<TInputSchema>, context: APIContext) => TOutput
-): (input: z.input<TInputSchema>) => Promise<Awaited<TOutput>>;
-export function action<TInputSchema extends z.ZodType, TOutput>(
-  inputOrHandler: TInputSchema | ((context: APIContext) => TOutput),
-  handler?: (input: z.infer<TInputSchema>, context: APIContext) => TOutput
-): (input: z.input<TInputSchema>) => Promise<Awaited<TOutput>> {
-  const context = ApiContextStorage.getStore()!;
-  if (typeof inputOrHandler === "function") {
-    return async (): Promise<Awaited<TOutput>> => await inputOrHandler(context);
+export function defineAction<TOutput, TInputSchema extends z.ZodType>({
+  input,
+  handler,
+}: {
+  input?: TInputSchema;
+  handler: (input: z.infer<TInputSchema>, context: APIContext) => TOutput;
+}): (input: z.input<TInputSchema>) => Promise<Awaited<TOutput>> {
+  if (!input) {
+    return async (unparsedInput): Promise<Awaited<TOutput>> => {
+      const context = ApiContextStorage.getStore()!;
+      return await handler(unparsedInput, context);
+    };
   }
   return async (unparsedInput): Promise<Awaited<TOutput>> => {
-    const inputArgs = inputOrHandler.safeParse(unparsedInput);
+    const context = ApiContextStorage.getStore()!;
+    const inputArgs = input.safeParse(unparsedInput);
     if (!inputArgs.success) {
       throw new Response(JSON.stringify(inputArgs.error), {
         status: 400,
@@ -27,7 +26,7 @@ export function action<TInputSchema extends z.ZodType, TOutput>(
         },
       });
     }
-    return await handler!(inputArgs.data, context);
+    return await handler(inputArgs.data, context);
   };
 }
 

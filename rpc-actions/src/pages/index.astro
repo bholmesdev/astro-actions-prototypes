@@ -6,24 +6,12 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { actions } from "test:actions";
 ---
 
-<script>
-  import { actions } from "test:actions";
-
-  const formData = new FormData();
-  formData.append("postId", "first-post.md");
-  await actions.blog.like(formData);
-</script>
-
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <body>
     <Header />
-    <form action={actions.blog.like} method="post">
-      <input type="hidden" name="postId" value="first-post.md" />
-      <button type="submit">Like</button>
-    </form>
     <main>
       <h1>🧑‍🚀 Hello, Astronaut!</h1>
       <p>

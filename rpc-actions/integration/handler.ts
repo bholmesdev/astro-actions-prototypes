@@ -26,14 +26,13 @@ export const POST: APIRoute = async (context) => {
   const contentType = request.headers.get("Content-Type");
   let args: any;
   if (contentType === "application/json") {
-    args = await request.json();
+    args = await request.clone().json();
   }
   if (formContentTypes.some((f) => contentType?.startsWith(f))) {
-    args = await request.formData();
+    args = await request.clone().formData();
   }
   let result: unknown;
   try {
-    // TODO: select correct action by path
     result = await ApiContextStorage.run(context, () => action(args));
   } catch (e) {
     if (e instanceof Response) {

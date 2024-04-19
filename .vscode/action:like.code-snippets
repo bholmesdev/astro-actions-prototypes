@@ -1,0 +1,10 @@
+{
+  "action:like": {
+    "scope": "",
+    "prefix": "action:like",
+    "body": [
+      "  await new Promise((r) => setTimeout(r, 200));\n  const { likes } = await db\n    .update(Likes)\n    .set({\n      likes: sql`likes + 1`,\n    })\n    .where(eq(Likes.postId, postId))\n    .returning()\n    .get();\n  return { likes };"
+    ],
+    "description": ""
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "action:comment": {
+    "scope": "",
+    "prefix": "action:comment",
+    "body": [
+      "const comment = action(\n  z.object({ postId: z.string(), author: z.string(), body: z.string() }),\n  async ({ postId, author, body }) => {\n    await db.insert(Comment).values({\n      postId,\n      body,\n      author,\n    });\n    return { success: true };\n  }\n);"
+    ],
+    "description": ""
+  }
+}

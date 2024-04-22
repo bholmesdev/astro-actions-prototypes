@@ -22,14 +22,14 @@ export default defineIntegration({
                 new URL("./virtual.js", import.meta.url),
                 "utf-8"
               ),
-              context: "client",
+              // context: "client",
             },
 
-            {
-              id: "test:actions",
-              content: `import _actions from '${srcDir}actions';\nexport const actions = _actions;`,
-              context: "server",
-            },
+            // {
+            //   id: "test:actions",
+            //   content: `import _actions from '${srcDir}actions';\nexport const actions = _actions;`,
+            //   context: "server",
+            // },
           ],
         });
       },

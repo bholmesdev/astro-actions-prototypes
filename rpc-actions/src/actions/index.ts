@@ -34,7 +34,9 @@ export default {
           body,
           author,
         });
-        return { success: true };
+      },
+      onSuccess({ redirect, referer }) {
+        return redirect(referer);
       },
     }),
   },

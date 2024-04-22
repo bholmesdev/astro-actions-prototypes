@@ -48,11 +48,6 @@ export const POST: APIRoute = async (context) => {
     });
   }
   let redirectUrl = new URL(request.headers.get("Referer") || request.url);
-  if (result) {
-    redirectUrl.searchParams.set("_action", url.pathname);
-    redirectUrl.searchParams.set("_actionResult", JSON.stringify(result));
-  }
-
   return redirect(redirectUrl.href);
 };
 

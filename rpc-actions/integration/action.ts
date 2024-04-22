@@ -45,38 +45,35 @@ export function defineAction<TOutput, TInputSchema extends z.ZodType>({
             "Content-Type": "application/json",
           },
         });
-        if (Accept !== "application/json") {
-          const serverResponse =
-            (await onError?.({
-              ...context,
-              referer,
-              rawInput: unparsedInput,
-              error: parsed.error,
-            })) ?? defaultError;
-          throw serverResponse;
-        }
-        throw defaultError;
+        if (Accept === "application/json") throw defaultError;
+        const serverResponse =
+          (await onError?.({
+            ...context,
+            referer,
+            rawInput: unparsedInput,
+            error: parsed.error,
+          })) ?? defaultError;
+        throw serverResponse;
       }
       handlerInput = parsed.data;
     }
     const result = await handler(handlerInput, context);
-    if (Accept !== "application/json") {
-      const serverResponse = await onSuccess?.({
-        ...context,
-        referer,
-        output: result,
-      });
-      throw (
-        serverResponse ??
-        new Response(null, {
-          status: 302,
-          headers: {
-            Location: referer,
-          },
-        })
-      );
-    }
-    return result;
+    if (Accept === "application/json") return result;
+
+    const serverResponse = await onSuccess?.({
+      ...context,
+      referer,
+      output: result,
+    });
+    throw (
+      serverResponse ??
+      new Response(null, {
+        status: 302,
+        headers: {
+          Location: referer,
+        },
+      })
+    );
   };
 }
 
